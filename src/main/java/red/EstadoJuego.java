@@ -21,6 +21,7 @@ public class EstadoJuego implements Serializable {
     private double pelotaX;
     private double pelotaY;
     private double pelotaTamaño;
+    private Color pelotaColor;
 
     private List<BloqueData> bloques;
 
@@ -31,11 +32,31 @@ public class EstadoJuego implements Serializable {
     private int puntosJugador1;
     private int puntosJugador2;
     private boolean juegoTerminado;
+    private  boolean juegoIniciado;
     private String Ganador;
 
     public EstadoJuego() {
         this.bloques = new ArrayList<>();
     }
+
+    public boolean isJuegoIniciado() {
+        return juegoIniciado;
+    }
+
+    public void setJuegoIniciado(boolean juegoIniciado) {
+        this.juegoIniciado = juegoIniciado;
+    }
+
+    
+    public Color getPelotaColor() {
+        return pelotaColor;
+    }
+
+    public void setPelotaColor(Color pelotaColor) {
+        this.pelotaColor = pelotaColor;
+    }
+    
+    
 
     public double getPelotaX() {
         return pelotaX;

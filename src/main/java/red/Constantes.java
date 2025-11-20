@@ -1,6 +1,7 @@
 package red;
 
 public class Constantes {
+
     public static final int ANCHO_VENTANA = 600;
     public static final int ALTO_VENTANA = 700;
 
@@ -8,6 +9,8 @@ public class Constantes {
     public static final double TAMANO_PELOTA = 20;
     public static final double VELOCIDAD_PELOTA_X = 3;
     public static final double VELOCIDAD_PELOTA_Y = 3;
+    public static final double POSICION_INICIAL_PELOTA_X = 290; // Centro horizontal
+    public static final double POSICION_INICIAL_PELOTA_Y = 350; // Centro vertical
 
     //  BASES
     public static final double ANCHO_BASE = 100;
@@ -44,5 +47,9 @@ public class Constantes {
     public static final String MSG_JUGADOR_1 = "JUGADOR 1 (TÚ)";
     public static final String MSG_JUGADOR_2 = "JUGADOR 2 (TÚ)";
     public static final String MSG_RIVAL = "RIVAL";
-
+    public static final String MSG_GANADOR_J1 = "JUGADOR 1 HA GANADO";
+    public static final String MSG_GANADOR_J2 = "JUGADOR 2 HA GANADO";
+    public static final String MSG_EMPATE = "EMPATE";
+     public static final String MSG_JUEGO_TERMINADO = "EL JUEGO ACABO";
+    
 }
