@@ -142,7 +142,7 @@ public class EstadoJuego implements Serializable {
     public static class BloqueData implements Serializable {
         private double x, y, ancho, alto;
         private Color color;
-        private Estado estado;
+        public Estado estado;
 
 
         public BloqueData(double x, double y, double ancho, double alto, Color color, Estado estado) {
