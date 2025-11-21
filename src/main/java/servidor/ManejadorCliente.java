@@ -40,17 +40,30 @@ public class ManejadorCliente extends Thread {
     public void run() {
         try {
             configurarStreams();
-
             enviarIdJugador();
-
             servidor.agregarLog("Jugador " + idJugador + " configurado correctamente");
-            while (conectado) {
-                recibirAccion();
-                enviarEstadoJuego();
 
+            // Crear hilo separado para recibir acciones
+            Thread hiloRecepcion = new Thread(() -> {
+                try {
+                    while (conectado) {
+                        AccionJugador accion = (AccionJugador) entrada.readObject();
+                        logicaJuego.procesarAccionJugador(accion);
+                    }
+                } catch (Exception e) {
+                    conectado = false;
+                }
+            });
+            hiloRecepcion.start();
+
+            while (conectado) {
+                enviarEstadoJuego();
                 Thread.sleep(Constantes.DELAY_FRAME);
             }
         } catch (Exception e) {
+            servidor.agregarLog("Error en jugador " + idJugador + ": " + e.getMessage());
+        } finally {
+            desconectar();
         }
     }
 
@@ -67,19 +80,6 @@ public class ManejadorCliente extends Thread {
         salida.writeInt(idJugador);
         salida.flush();
         servidor.agregarLog("→ ID " + idJugador + " enviado al cliente");
-    }
-    
-    /**
-     * Recibe una acción del cliente
-     */
-    private void recibirAccion() throws IOException, ClassNotFoundException {
-        
-        if (entrada.available() > 0) {
-            AccionJugador accion = (AccionJugador) entrada.readObject();
-            
-            // Procesar la acción en la lógica del juego
-            logicaJuego.procesarAccionJugador(accion);
-        }
     }
 
     private void enviarEstadoJuego() throws IOException {
@@ -114,14 +114,14 @@ public class ManejadorCliente extends Thread {
     public boolean isConectado() {
         return conectado && !socket.isClosed();
     }
-    
-     public int getIdJugador() {
+
+    public int getIdJugador() {
         return idJugador;
     }
-     
-      public String getInfoCliente() {
-        return "• Jugador " + idJugador + " - " + 
-               socket.getInetAddress().getHostAddress() + ":" + 
-               socket.getPort();
+
+    public String getInfoCliente() {
+        return "• Jugador " + idJugador + " - "
+                + socket.getInetAddress().getHostAddress() + ":"
+                + socket.getPort();
     }
 }

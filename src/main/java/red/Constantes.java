@@ -2,25 +2,24 @@ package red;
 
 public class Constantes {
 
-    public static final int ANCHO_VENTANA = 600;
-    public static final int ALTO_VENTANA = 700;
+    public static final int ANCHO_VENTANA = 800;
+    public static final int ALTO_VENTANA = 900;
 
     //  PELOTA
     public static final double TAMANO_PELOTA = 20;
     public static final double VELOCIDAD_PELOTA_X = 3;
     public static final double VELOCIDAD_PELOTA_Y = 3;
-    public static final double POSICION_INICIAL_PELOTA_X = 290; // Centro horizontal
-    public static final double POSICION_INICIAL_PELOTA_Y = 350; // Centro vertical
-
+    public static final double POSICION_INICIAL_PELOTA_X = 390; // Centro horizontal
+    public static final double POSICION_INICIAL_PELOTA_Y = 450; // Centro vertical
     //  BASES
     public static final double ANCHO_BASE = 100;
     public static final double ALTO_BASE = 20;
     public static final double VELOCIDAD_BASE = 15;
 
     // Posiciones iniciales de las bases
-    public static final double BASE_J1_Y = 650; // Jugador 1 abajo
-    public static final double BASE_J2_Y = 30;  // Jugador 2 arriba
-    public static final double BASE_INICIAL_X = 250; // Centrada
+    public static final double BASE_J1_Y = 850;  // Jugador 1 abajo
+    public static final double BASE_J2_Y = 30; // Jugador 2 arriba
+    public static final double BASE_INICIAL_X = 350; // Centrada
 
     // BLOQUES
     public static final int BLOQUES_FILAS = 5;
@@ -50,6 +49,6 @@ public class Constantes {
     public static final String MSG_GANADOR_J1 = "JUGADOR 1 HA GANADO";
     public static final String MSG_GANADOR_J2 = "JUGADOR 2 HA GANADO";
     public static final String MSG_EMPATE = "EMPATE";
-     public static final String MSG_JUEGO_TERMINADO = "EL JUEGO ACABO";
-    
+    public static final String MSG_JUEGO_TERMINADO = "EL JUEGO ACABO";
+
 }

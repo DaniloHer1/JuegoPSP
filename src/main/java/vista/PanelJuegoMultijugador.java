@@ -11,6 +11,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import red.Constantes;
 
 public class PanelJuegoMultijugador extends JPanel implements KeyListener {
 
@@ -23,7 +24,7 @@ public class PanelJuegoMultijugador extends JPanel implements KeyListener {
     public PanelJuegoMultijugador() {
         this.estadoActual = new EstadoJuego();
 
-        setPreferredSize(new Dimension(600, 700));
+        setPreferredSize(new Dimension(Constantes.ANCHO_VENTANA, Constantes.ALTO_VENTANA));
         setBackground(Color.BLACK);
 
         setFocusable(true);
