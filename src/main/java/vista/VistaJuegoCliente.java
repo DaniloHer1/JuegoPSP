@@ -20,7 +20,6 @@ public class VistaJuegoCliente extends javax.swing.JFrame {
 
         ConexionServidor conexion = new ConexionServidor(ip, puerto, panel);
         panel.setConexion(conexion);
-        panel.setIdJugador(1); // Temporal, el servidor debe enviar el real
         conexion.start();
 
         panel.requestFocusInWindow();

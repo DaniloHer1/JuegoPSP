@@ -29,6 +29,9 @@ public class PanelJuegoMultijugador extends JPanel implements KeyListener {
         setFocusable(true);
         requestFocusInWindow();
         addKeyListener(this);
+        
+        Timer repaintTimer = new Timer(16, e -> repaint());
+        repaintTimer.start();
     }
 
     public void setConexion(ConexionServidor conexion) {
@@ -45,12 +48,18 @@ public class PanelJuegoMultijugador extends JPanel implements KeyListener {
     }
 
     private void enviarMovimiento() {
-        if (conexion == null) return;
+        if (conexion == null) {
+            return;
+        }
 
         AccionJugador.TipoAccion accion;
-        if (direccion == -1) accion = AccionJugador.TipoAccion.MOVER_IZQUIERDA;
-        else if (direccion == 1) accion = AccionJugador.TipoAccion.MOVER_DERECHA;
-        else accion = AccionJugador.TipoAccion.NADA;
+        if (direccion == -1) {
+            accion = AccionJugador.TipoAccion.MOVER_IZQUIERDA;
+        } else if (direccion == 1) {
+            accion = AccionJugador.TipoAccion.MOVER_DERECHA;
+        } else {
+            accion = AccionJugador.TipoAccion.NADA;
+        }
 
         conexion.enviarAccion(new AccionJugador(accion, idJugador));
     }
@@ -58,7 +67,9 @@ public class PanelJuegoMultijugador extends JPanel implements KeyListener {
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
-        if (estadoActual == null) return;
+        if (estadoActual == null) {
+            return;
+        }
 
         // Pelota
         g.setColor(estadoActual.getPelotaColor());
@@ -111,8 +122,12 @@ public class PanelJuegoMultijugador extends JPanel implements KeyListener {
 
     @Override
     public void keyPressed(KeyEvent e) {
-        if (e.getKeyCode() == KeyEvent.VK_LEFT) direccion = -1;
-        if (e.getKeyCode() == KeyEvent.VK_RIGHT) direccion = 1;
+        if (e.getKeyCode() == KeyEvent.VK_LEFT) {
+            direccion = -1;
+        }
+        if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
+            direccion = 1;
+        }
         enviarMovimiento();
     }
 
@@ -125,5 +140,6 @@ public class PanelJuegoMultijugador extends JPanel implements KeyListener {
     }
 
     @Override
-    public void keyTyped(KeyEvent e) {}
+    public void keyTyped(KeyEvent e) {
+    }
 }

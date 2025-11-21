@@ -9,6 +9,7 @@ import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
@@ -36,7 +37,13 @@ public class ServidorArkanoid extends javax.swing.JFrame {
      * Creates new form ServidorArkanoid
      */
     public ServidorArkanoid() {
-        initComponents();
+
+       
+        initComponents(); 
+        iniciarInterfaz();
+        this.jugadores = new ArrayList<>();
+        this.logicaJuego = new LogicaJuego(this);
+
     }
 
     public void iniciarInterfaz() {
@@ -48,13 +55,16 @@ public class ServidorArkanoid extends javax.swing.JFrame {
         jButton2.setEnabled(false);
         jTextArea1.setText("(Ningún cliente conectado)");
         jTextArea2.setText("");
-        jLabel3.setText("🔴 Servidor detenido");
+        jLabel3.setText("Servidor detenido");
+
+        jButton1.addActionListener(e -> iniciarServidor());
+        jButton2.addActionListener(e -> detenerServidor());
 
     }
 
     private void iniciarServidor() {
-        
-        puerto=Integer.parseInt(jTextField1.getText());
+
+        puerto = Integer.parseInt(jTextField1.getText());
 
         try {
             serverSocket = new ServerSocket(puerto);
@@ -63,7 +73,7 @@ public class ServidorArkanoid extends javax.swing.JFrame {
         }
         servidorActivo = true;
 
-        // Actualizar interfaz
+
         actualizarEstadoBotones(true);
         jTextArea2.setText(""); // Limpiar logs
         agregarLog("=================================");
@@ -102,7 +112,7 @@ public class ServidorArkanoid extends javax.swing.JFrame {
             agregarLog("=================================");
 
             jTextArea1.setText("(Ningún cliente conectado)");
-            jLabel3.setText("🔴 Servidor detenido");
+            jLabel3.setText("Servidor detenido");
 
             // TODO: Cerrar conexiones de clientes activos
         } catch (IOException ex) {
@@ -133,9 +143,9 @@ public class ServidorArkanoid extends javax.swing.JFrame {
                             this,
                             logicaJuego);
                     jugadores.add(manejadorCliente);
-                    manejadorCliente.run();
-                    
-                     if (contadorJugadores == Constantes.MAX_JUGADORES) {
+                    manejadorCliente.start();
+
+                    if (contadorJugadores == Constantes.MAX_JUGADORES) {
                         agregarLog("=================================");
                         agregarLog(Constantes.MSG_JUEGO_INICIADO);
                         agregarLog("=================================");
@@ -283,13 +293,11 @@ public class ServidorArkanoid extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        // TODO add your handling code here:
-        detenerServidor();
+        // TODO add your handling code here:   
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
-        iniciarServidor();
+        // TODO add your handling code here:    
     }//GEN-LAST:event_jButton1ActionPerformed
 
     /**

@@ -138,9 +138,8 @@ public class LogicaJuego {
 
         }
         juegoActivo = true;
-        timer = new Timer(Constantes.DELAY_FRAME, e -> {
-            actualizarJuego();
-        });
+        timer = new Timer(Constantes.DELAY_FRAME, e -> actualizarJuego());
+        timer.start();
     }
 
     public void detenerTimer() {
@@ -285,49 +284,49 @@ public class LogicaJuego {
                 break;
         }
     }
-    
-    public EstadoJuego generarEstadoJuego(){
-        EstadoJuego estado =new EstadoJuego();
-        estado.setPelotaX(pelota.getPosicionY());
+
+    public EstadoJuego generarEstadoJuego() {
+        EstadoJuego estado = new EstadoJuego();
+        estado.setPelotaX(pelota.getPosicionX());
         estado.setPelotaY(pelota.getPosicionY());
         estado.setPelotaTamaño(pelota.getTamaño());
         estado.setPelotaColor(pelota.getColor());
-         estado.setBaseJugador1(new EstadoJuego.BaseData(
-            baseJugador1.getPosicionX(),
-            baseJugador1.getPosicionY(),
-            baseJugador1.getAncho(),
-            baseJugador1.getAlto(),
-            Color.BLUE
+        estado.setBaseJugador1(new EstadoJuego.BaseData(
+                baseJugador1.getPosicionX(),
+                baseJugador1.getPosicionY(),
+                baseJugador1.getAncho(),
+                baseJugador1.getAlto(),
+                Color.BLUE
         ));
-        
+
         estado.setBasejugador2(new EstadoJuego.BaseData(
-            baseJugador2.getPosicionX(),
-            baseJugador2.getPosicionY(),
-            baseJugador2.getAncho(),
-            baseJugador2.getAlto(),
-            Color.RED
+                baseJugador2.getPosicionX(),
+                baseJugador2.getPosicionY(),
+                baseJugador2.getAncho(),
+                baseJugador2.getAlto(),
+                Color.RED
         ));
-        
+
         // Datos de los bloques
         List<EstadoJuego.BloqueData> bloquesData = new ArrayList<>();
         for (Bloques bloque : listaBloques) {
             bloquesData.add(new EstadoJuego.BloqueData(
-                bloque.getPosicionX(),
-                bloque.getPosicionY(),
-                bloque.getAncho(),
-                bloque.getAlto(),
-                bloque.getColor(),
-                bloque.getEstadoBloque()
+                    bloque.getPosicionX(),
+                    bloque.getPosicionY(),
+                    bloque.getAncho(),
+                    bloque.getAlto(),
+                    bloque.getColor(),
+                    bloque.getEstadoBloque()
             ));
         }
         estado.setBloques(bloquesData);
-        
+
         // Información del juego
         estado.setPuntosJugador1(puntosJugador1);
         estado.setPuntosJugador2(puntosJugador2);
         estado.setJuegoTerminado(juegoTerminado);
         estado.setJuegoIniciado(juegoActivo);
-        
+
         if (juegoTerminado) {
             if (puntosJugador1 > puntosJugador2) {
                 estado.setGanador(Constantes.MSG_GANADOR_J1);
@@ -337,9 +336,9 @@ public class LogicaJuego {
                 estado.setGanador(Constantes.MSG_EMPATE);
             }
         }
-        
+
         return estado;
-        
+
     }
 
     public boolean isJuegoActivo() {
@@ -349,6 +348,5 @@ public class LogicaJuego {
     public boolean isJuegoTerminado() {
         return juegoTerminado;
     }
-    
 
 }
