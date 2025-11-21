@@ -27,11 +27,15 @@ public class ConexionServidor extends Thread {
     @Override
     public void run() {
         try (Socket socket = new Socket(ip, puerto)) {
-
             out = new ObjectOutputStream(socket.getOutputStream());
+            out.flush();
+
             ObjectInputStream in = new ObjectInputStream(socket.getInputStream());
 
-            // Recibir estados constantemente
+            // Recibir ID del servidor
+            int idJugador = in.readInt();
+            panel.setIdJugador(idJugador);
+
             while (true) {
                 EstadoJuego estado = (EstadoJuego) in.readObject();
                 panel.actualizarEstado(estado);

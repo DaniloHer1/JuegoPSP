@@ -53,6 +53,8 @@ public class ServidorArkanoid extends javax.swing.JFrame {
     }
 
     private void iniciarServidor() {
+        
+        puerto=Integer.parseInt(jTextField1.getText());
 
         try {
             serverSocket = new ServerSocket(puerto);
@@ -69,7 +71,7 @@ public class ServidorArkanoid extends javax.swing.JFrame {
         agregarLog("Esperando conexiones...");
         agregarLog("=================================");
 
-        jLabel3.setText("🟢 Servidor Activo - Puerto: " + puerto);
+        jLabel3.setText("Servidor Activo - Puerto: " + puerto);
 
         iniciarHiloAceptarClientes();
     }
@@ -195,6 +197,11 @@ public class ServidorArkanoid extends javax.swing.JFrame {
         jTextField1.setEnabled(false);
 
         jButton1.setText("Iniciar");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         jButton2.setText("Detener");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
@@ -277,7 +284,13 @@ public class ServidorArkanoid extends javax.swing.JFrame {
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
+        detenerServidor();
     }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        iniciarServidor();
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments
