@@ -5,12 +5,13 @@
 package vista;
 
 import java.awt.BorderLayout;
+import red.Constantes;
 
 public class VistaJuegoCliente extends javax.swing.JFrame {
 
     public VistaJuegoCliente(String ip, int puerto) {
         setTitle("Arkanoid Multiplayer");
-        setSize(800, 700);
+        setSize(Constantes.ANCHO_VENTANA, Constantes.ALTO_VENTANA);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
         setResizable(false);
