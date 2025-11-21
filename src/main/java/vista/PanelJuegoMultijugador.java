@@ -5,7 +5,6 @@
 package vista;
 
 import red.AccionJugador;
-import red.ConexionServidor;
 import red.EstadoJuego;
 
 import javax.swing.*;
@@ -21,8 +20,7 @@ public class PanelJuegoMultijugador extends JPanel implements KeyListener {
 
     private int direccion = 0; // -1 izquierda, 1 derecha, 0 nada
 
-    public PanelJuegoMultijugador(ConexionServidor conexion) {
-        this.conexion = conexion;
+    public PanelJuegoMultijugador() {
         this.estadoActual = new EstadoJuego();
 
         setPreferredSize(new Dimension(600, 700));
@@ -33,48 +31,43 @@ public class PanelJuegoMultijugador extends JPanel implements KeyListener {
         addKeyListener(this);
     }
 
-    /**  Recibe estado sincronizado desde el servidor **/
+    public void setConexion(ConexionServidor conexion) {
+        this.conexion = conexion;
+    }
+
+    public void setIdJugador(int id) {
+        this.idJugador = id;
+    }
+
     public synchronized void actualizarEstado(EstadoJuego estado) {
         this.estadoActual = estado;
         repaint();
     }
 
-    /**  Recibe el ID de jugador asignado por el servidor (1 o 2) **/
-    public void setIdJugador(int id) {
-        this.idJugador = id;
-    }
-
-    /** Envía movimiento al servidor usando AccionJugador **/
     private void enviarMovimiento() {
+        if (conexion == null) return;
 
         AccionJugador.TipoAccion accion;
+        if (direccion == -1) accion = AccionJugador.TipoAccion.MOVER_IZQUIERDA;
+        else if (direccion == 1) accion = AccionJugador.TipoAccion.MOVER_DERECHA;
+        else accion = AccionJugador.TipoAccion.NADA;
 
-        if (direccion == -1) {
-            accion = AccionJugador.TipoAccion.MOVER_IZQUIERDA;
-        } else if (direccion == 1) {
-            accion = AccionJugador.TipoAccion.MOVER_DERECHA;
-        } else {
-            accion = AccionJugador.TipoAccion.NADA;
-        }
-
-        AccionJugador msg = new AccionJugador(accion, idJugador);
-        conexion.enviarAccion(msg);
+        conexion.enviarAccion(new AccionJugador(accion, idJugador));
     }
 
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
-
         if (estadoActual == null) return;
 
-        // PINTAR PELOTA
+        // Pelota
         g.setColor(estadoActual.getPelotaColor());
         g.fillOval((int) estadoActual.getPelotaX(),
                 (int) estadoActual.getPelotaY(),
                 (int) estadoActual.getPelotaTamaño(),
                 (int) estadoActual.getPelotaTamaño());
 
-        // PINTAR BASES
+        // Bases
         if (estadoActual.getBaseJugador1() != null) {
             g.setColor(estadoActual.getBaseJugador1().color);
             g.fillRect((int) estadoActual.getBaseJugador1().x,
@@ -82,7 +75,6 @@ public class PanelJuegoMultijugador extends JPanel implements KeyListener {
                     (int) estadoActual.getBaseJugador1().ancho,
                     (int) estadoActual.getBaseJugador1().alto);
         }
-
         if (estadoActual.getBasejugador2() != null) {
             g.setColor(estadoActual.getBasejugador2().color);
             g.fillRect((int) estadoActual.getBasejugador2().x,
@@ -91,7 +83,7 @@ public class PanelJuegoMultijugador extends JPanel implements KeyListener {
                     (int) estadoActual.getBasejugador2().alto);
         }
 
-        // PINTAR BLOQUES
+        // Bloques
         if (estadoActual.getBloques() != null) {
             for (EstadoJuego.BloqueData b : estadoActual.getBloques()) {
                 if (b.estado == modelo.Estado.INTACTO) {
@@ -103,13 +95,13 @@ public class PanelJuegoMultijugador extends JPanel implements KeyListener {
             }
         }
 
-        // PINTAR PUNTOS
+        // Puntos
         g.setColor(Color.WHITE);
         g.setFont(new Font("Arial", Font.BOLD, 18));
         g.drawString("J1: " + estadoActual.getPuntosJugador1(), 20, 20);
         g.drawString("J2: " + estadoActual.getPuntosJugador2(), 520, 20);
 
-        // MENSAJE DE FIN DE JUEGO
+        // Fin de juego
         if (estadoActual.isJuegoTerminado()) {
             g.setFont(new Font("Arial", Font.BOLD, 30));
             g.drawString("FIN DEL JUEGO", 200, 350);
@@ -117,18 +109,10 @@ public class PanelJuegoMultijugador extends JPanel implements KeyListener {
         }
     }
 
-    /** =====================   CONTROLES   ========================= **/
-
     @Override
     public void keyPressed(KeyEvent e) {
-
-        if (e.getKeyCode() == KeyEvent.VK_LEFT) {
-            direccion = -1;
-        }
-        if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
-            direccion = 1;
-        }
-
+        if (e.getKeyCode() == KeyEvent.VK_LEFT) direccion = -1;
+        if (e.getKeyCode() == KeyEvent.VK_RIGHT) direccion = 1;
         enviarMovimiento();
     }
 

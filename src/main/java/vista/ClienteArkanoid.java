@@ -2,12 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package cliente;
-
-/**
- *
- * @author Diurno
- */
+package vista;
 
 import javax.swing.*;
 import java.awt.*;
@@ -48,7 +43,7 @@ public class ClienteArkanoid extends JFrame {
         lbl2.setBounds(20, 60, 120, 25);
         panel.add(lbl2);
 
-        txtPuerto = new JTextField("5000");
+        txtPuerto = new JTextField("5050");
         txtPuerto.setBounds(150, 60, 150, 25);
         panel.add(txtPuerto);
 
@@ -86,11 +81,11 @@ public class ClienteArkanoid extends JFrame {
         lblEstado.setText("Conectando...");
         lblEstado.setForeground(Color.BLUE);
 
-        // Crear la vista de juego con el panel
+        // Abrir la ventana del juego
         VistaJuegoCliente vista = new VistaJuegoCliente(ip, puerto);
         vista.setVisible(true);
 
-        // Cierra la ventana de conexión
+        // Cerrar ventana de conexión
         this.dispose();
     }
 

@@ -140,8 +140,11 @@ public class EstadoJuego implements Serializable {
 
     // Clases para que el servidor maneje la sincornizacion
     public static class BloqueData implements Serializable {
-        private double x, y, ancho, alto;
-        private Color color;
+        public double x;
+        public double y;
+        public double ancho;
+        public double alto;
+        public Color color;
         public Estado estado;
 
 
